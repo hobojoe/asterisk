@@ -1,0 +1,25 @@
+FROM alpine:latest
+
+MAINTAINER Andrius Kairiukstis <andrius@kairiukstis.com>
+
+RUN apk add --update \
+      asterisk
+RUN sleep 2
+RUN rm -rf /var/run/asterisk/* \
+&& mkdir -p /var/spool/asterisk/fax \
+&& chown -R asterisk: /var/spool/asterisk/fax \
+&& truncate -s 0 /var/log/asterisk/messages \
+                 /var/log/asterisk/queue_log \
+&&  rm -rf /var/cache/apk/* \
+           /tmp/* \
+           /var/tmp/*
+
+RUN rm -rf /etc/asterisk/*
+
+ADD asterisk-conf /etc/asterisk/
+
+RUN asterisk -U asterisk
+
+ADD docker-entrypoint.sh /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
