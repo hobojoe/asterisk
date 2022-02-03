@@ -38,9 +38,9 @@ RUN rm -rf /var/lib/apt/lists/* && \
 
 ADD kamailio-conf /etc/kamailio/
 
-RUN mv ./kamailio-conf/kamdbctl /usr/sbin/
+RUN mv ./etc/kamailio/kamdbctl /usr/sbin/
 
-RUN mv ./kamailio-conf/kamdbctl.mysql /usr/lib/x86_64-linux-gnu/kamailio/kamctl/
+RUN mv ./etc/kamailio/kamdbctl.mysql /usr/lib/x86_64-linux-gnu/kamailio/kamctl/
 
 ADD docker-entrypoint-kamailio.sh /docker-entrypoint-kamailio.sh
 
