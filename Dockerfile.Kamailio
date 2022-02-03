@@ -38,4 +38,16 @@ RUN rm -rf /var/lib/apt/lists/* && \
 
 ADD kamailio-conf /etc/kamailio/
 
-ENTRYPOINT ["kamailio", "-DD", "-E"]
+RUN mv ./kamailio-conf/kamdbctl /usr/sbin/
+
+RUN mv ./kamailio-conf/kamdbctl.mysql /usr/lib/x86_64-linux-gnu/kamailio/kamctl/
+
+ADD docker-entrypoint-kamailio.sh /docker-entrypoint-kamailio.sh
+
+RUN ["chmod", "+x", "/docker-entrypoint-kamailio.sh"]
+
+ADD wait-for-it.sh /wait-for-it.sh
+
+RUN ["chmod", "+x", "/wait-for-it.sh"]
+
+ENTRYPOINT ["./wait-for-it.sh", "db_kamailio:3306" , "--", "sh", "./docker-entrypoint-kamailio.sh"]

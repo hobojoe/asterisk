@@ -1,5 +1,11 @@
 version: "3"
 
+networks:
+  main:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
 services:
   kamailio:
     image: techer/kamailio
@@ -7,32 +13,34 @@ services:
       main:
         aliases:
           - kamailio
+        ipv4_address: 172.20.0.9
     ports: 
       - 5060:5060/tcp
       - 5060:5060/udp
   
-  asterisk_1:
+  asterisk:
     image: techer/asterisk
     networks:
       main:
         aliases:
-          - asterisk_1
+          - asterisk
+        ipv4_address: 172.20.0.8
 
-  asterisk_2:
-    image: techer/asterisk
-    networks:
-      main:
-        aliases:
-          - asterisk_2
+  # asterisk_2:
+  #   image: techer/asterisk
+  #   networks:
+  #     main:
+  #       aliases:
+  #         - asterisk_2
 
-  ari:
-    image: techer/ari
-    networks:
-      main:
-        aliases:
-          - ari
-    ports:
-      - 8080:8080
+  # ari:
+  #   image: techer/ari
+  #   networks:
+  #     main:
+  #       aliases:
+  #         - ari
+  #   ports:
+  #     - 8080:8080
 
   db:
     image: mysql:5.7
@@ -49,9 +57,21 @@ services:
         aliases:
           - db
 
+  db_kamailio:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'kamailio'
+      MYSQL_USER: 'kamailio'
+      MYSQL_PASSWORD: 'kamailio'
+      MYSQL_ROOT_PASSWORD: 'NOUSAR'
+    volumes:
+      - my-db_kamailio:/var/lib/mysql
+    networks:
+      main:
+        aliases:
+          - db_kamailio
+
 volumes: 
   my-db:
-
-networks:
-  main:
-  
+  my-db_kamailio:

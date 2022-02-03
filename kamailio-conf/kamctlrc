@@ -15,42 +15,42 @@
 ##
 ## If you want to setup a database with kamdbctl, you must at least specify
 ## this parameter.
-# DBENGINE=MYSQL
+ DBENGINE=MYSQL
 
 ## database host
-# DBHOST=localhost
+ DBHOST=db_kamailio
 
 ## database port
-# DBPORT=3306
+ DBPORT=3306
 
 ## database name (for ORACLE this is TNS name)
-# DBNAME=kamailio
+ DBNAME=kamailio
 
 ## database path used by dbtext, db_berkeley or sqlite
 # DB_PATH="/usr/local/etc/kamailio/dbtext"
 
 ## database read/write user
-# DBRWUSER="kamailio"
+ DBRWUSER="kamailio"
 
 ## password for database read/write user
-# DBRWPW="kamailiorw"
+ DBRWPW="kamailio"
 
 ## database read only user
-# DBROUSER="kamailioro"
+ DBROUSER="kamailio"
 
 ## password for database read only user
-# DBROPW="kamailioro"
+ DBROPW="kamailio"
 
 ## database access host (from where is kamctl used)
 # DBACCESSHOST=192.168.0.1
 
 ## database super user (for ORACLE this is 'scheme-creator' user)
-# DBROOTUSER="root"
+ DBROOTUSER="root"
 
 ## password for database super user
 ## - important: this is insecure, targeting the use only for automatic testing
 ## - known to work for: mysql
-# DBROOTPW="dbrootpw"
+ DBROOTPW="NOUSAR"
 
 ## option to ask confirmation for all database creation steps
 # DBINITASK=yes
