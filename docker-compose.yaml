@@ -7,16 +7,6 @@ networks:
         - subnet: 172.20.0.0/24
 
 services:
-  kamailio:
-    image: techer/kamailio
-    networks:
-      main:
-        aliases:
-          - kamailio
-        ipv4_address: 172.20.0.9
-    ports: 
-      - 5060:5060/tcp
-      - 5060:5060/udp
   
   asterisk:
     image: techer/asterisk
@@ -25,6 +15,26 @@ services:
         aliases:
           - asterisk
         ipv4_address: 172.20.0.8
+    ports: 
+      - 5060:5060/tcp
+      - 5060:5060/udp
+      - 10000-10050:10000-10050/udp
+      - 10000-10050:10000-10050/tcp
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'teste'
+      MYSQL_PASSWORD: 'teste'
+      MYSQL_ROOT_PASSWORD: 'NOUSAR'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      main:
+        aliases:
+          - db
 
   # asterisk_2:
   #   image: techer/asterisk
@@ -42,36 +52,32 @@ services:
   #   ports:
   #     - 8080:8080
 
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'teste'
-      MYSQL_PASSWORD: 'teste'
-      MYSQL_ROOT_PASSWORD: 'NOUSAR'
-    volumes:
-      - my-db:/var/lib/mysql
-    networks:
-      main:
-        aliases:
-          - db
+  # kamailio:
+  #   image: techer/kamailio
+  #   networks:
+  #     main:
+  #       aliases:
+  #         - kamailio
+  #       ipv4_address: 172.20.0.9
+  #   ports: 
+  #     - 5060:5060/tcp
+  #     - 5060:5060/udp
 
-  db_kamailio:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'kamailio'
-      MYSQL_USER: 'kamailio'
-      MYSQL_PASSWORD: 'kamailio'
-      MYSQL_ROOT_PASSWORD: 'NOUSAR'
-    volumes:
-      - my-db_kamailio:/var/lib/mysql
-    networks:
-      main:
-        aliases:
-          - db_kamailio
+  # db_kamailio:
+  #   image: mysql:5.7
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: 'kamailio'
+  #     MYSQL_USER: 'kamailio'
+  #     MYSQL_PASSWORD: 'kamailio'
+  #     MYSQL_ROOT_PASSWORD: 'NOUSAR'
+  #   volumes:
+  #     - my-db_kamailio:/var/lib/mysql
+  #   networks:
+  #     main:
+  #       aliases:
+  #         - db_kamailio
 
 volumes: 
   my-db:
-  my-db_kamailio:
+  # my-db_kamailio:
