@@ -1,19 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+var client = require('ari-client')
+client.connect('http://asterisk:8088', 'asterisk', 'asterisk', clientLoaded);
 
-const testRoutes = require('./routes/test');
-
-const app = express();
-
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-
-app.use('/test', testRoutes);
-
-app.listen(8080);
+function clientLoaded (err, client) {
+    if (err) {
+      throw err;
+    }
+    // handler for StasisStart event
+    function stasisStart(event, channel) {
+      // ensure the channel is not a dialed channel
+      console.log("Statis Start!!!!", event);
+      
+    }
+  
+    client.on('StasisStart', stasisStart);
+  
+    client.start('ari-app');
+  }
