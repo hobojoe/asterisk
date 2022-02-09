@@ -1,17 +1,17 @@
 FROM node:17-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+#RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-USER node
+#USER node
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node ./ari-app/package*.json ./
+#COPY --chown=node:node ./ari-app/package*.json ./
 
-RUN npm install
+#RUN npm install
 
-COPY --chown=node:node ./ari-app .
+#COPY --chown=node:node ./ari-app .
 
 EXPOSE 8080
 
-CMD ["node", "app.js"]
+ENTRYPOINT ["npx", "nodemon", "-L", "app.js"]

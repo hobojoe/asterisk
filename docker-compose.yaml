@@ -21,6 +21,13 @@ services:
       - 10000-10050:10000-10050/udp
       - 10000-10050:10000-10050/tcp
 
+  ari:
+    image: techer/ari
+    networks:
+      main:
+        aliases:
+          - ari
+
   db:
     image: mysql:5.7
     restart: always
@@ -43,14 +50,7 @@ services:
   #       aliases:
   #         - asterisk_2
 
-  # ari:
-  #   image: techer/ari
-  #   networks:
-  #     main:
-  #       aliases:
-  #         - ari
-  #   ports:
-  #     - 8080:8080
+  
 
   # kamailio:
   #   image: techer/kamailio
