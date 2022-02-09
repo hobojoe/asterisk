@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "ari-client": "^2.2.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
   }
 }

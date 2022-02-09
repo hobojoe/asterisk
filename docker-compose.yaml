@@ -27,6 +27,8 @@ services:
       main:
         aliases:
           - ari
+    volumes:
+      - ./ari-app:/home/node/app
 
   db:
     image: mysql:5.7

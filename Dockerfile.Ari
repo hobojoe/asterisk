@@ -4,6 +4,8 @@ FROM node:17-alpine
 
 #USER node
 
+RUN apk update && apk add bash && apk add --no-cache coreutils
+
 WORKDIR /home/node/app
 
 #COPY --chown=node:node ./ari-app/package*.json ./
@@ -14,4 +16,8 @@ WORKDIR /home/node/app
 
 EXPOSE 8080
 
-ENTRYPOINT ["npx", "nodemon", "-L", "app.js"]
+ADD wait-for-it.sh /wait-for-it.sh
+
+RUN ["chmod", "+x", "/wait-for-it.sh"]
+
+ENTRYPOINT ["/wait-for-it.sh", "asterisk:8088", "-t", "60" , "--", "npx", "nodemon", "-L", "app.js"]
