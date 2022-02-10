@@ -13,8 +13,7 @@ async function main(){
     // ensure the channel is not a dialed channel
     // console.log("Statis Start!!!!", event);
     console.log(event);
-    if(event.channel.state != 'Down'){
-      channel.anwers();
+    if(event.channel.state != 'Down'){      
       const dialed = await client.channels.create({
         endpoint: `PJSIP/${event.channel.dialplan.exten}`,
         app: 'ari-app',
@@ -35,6 +34,8 @@ async function main(){
       await bridge.addChannel({channel: [channel.id, dialed.id]});
 
       await client.channels.dial({ channelId: dialed.id});
+
+      await channel.answer();
     }
   }
   
