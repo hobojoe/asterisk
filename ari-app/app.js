@@ -10,8 +10,6 @@ async function main(){
   // handler for StasisStart event
   async function stasisStart(event, channel) {
     
-    // ensure the channel is not a dialed channel
-    // console.log("Statis Start!!!!", event);
     console.log(event);
     if(event.channel.state != 'Down'){      
       const dialed = await client.channels.create({
@@ -20,22 +18,14 @@ async function main(){
         appArgs: 'dialed'
       });
 
-      // for (const key in dialed) {
-      //   if(dialed.hasOwnProperty(key))
-      //     console.log(dialed[key]);
-      // }
-
-      //colocar en un bridge
-
       let bridge = client.Bridge();
 
       bridge = await bridge.create();
-
+      console.log(dialed.id);
       await bridge.addChannel({channel: [channel.id, dialed.id]});
 
       await client.channels.dial({ channelId: dialed.id});
 
-      await channel.answer();
     }
   }
   
