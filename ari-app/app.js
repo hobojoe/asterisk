@@ -7,6 +7,7 @@ async function main(){
 
   // handler for StasisStart event
   async function stasisStart(event, channel) {
+    // console.log('ligou', event);
     if(event.args[0] != 'dialed'){      
       await makeCall(channel, event.channel.dialplan.exten, client)
     }
@@ -33,6 +34,12 @@ async function makeCall(origem, extension, client){
 
   let bridge = client.Bridge();
   bridge = await bridge.create();
+  // console.log('bridge', bridge);
+  // client.bridges.record({
+  //   bridgeId: bridge.id, 
+  //   format: "wav", 
+  //   name: "testeluciano"
+  // })
   await bridge.addChannel({channel: [origem.id, dialed.id]});
 
   await client.channels.dial({ channelId: dialed.id});
