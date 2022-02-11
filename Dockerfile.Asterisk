@@ -16,6 +16,10 @@ RUN rm -rf /var/run/asterisk/* \
 && apk add --update sngrep \
       tcpdump
 
+RUN mkdir /var/lib/asterisk/mohwav
+
+ADD moh /var/lib/asterisk/mohwav
+
 RUN rm -rf /etc/asterisk/*
 
 ADD asterisk-conf /etc/asterisk/
